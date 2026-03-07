@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HabitFlow</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Login View -->
+      <div id="login-view" class="auth-forest-layout">
+        <div class="gradient-overlay"></div>
+        <div class="tint-overlay"></div>
+        
+        <div class="floating-form-left">
+          <p class="forest-label">START YOUR JOURNEY</p>
+          <h1 class="forest-heading">Welcome Back<span class="dot-accent">.</span></h1>
+          <p class="forest-switch-text">Don't have an account? <a href="#" id="link-go-register" class="forest-link">Sign Up</a></p>
+          
+          <div class="forest-form" style="margin-top: 32px;">
+            <div class="input-row">
+              <div class="input-wrapper">
+                <input type="text" id="login-firstname" class="forest-input" placeholder="First Name" autocomplete="given-name">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div class="input-wrapper">
+                <input type="text" id="login-lastname" class="forest-input" placeholder="Last Name" autocomplete="family-name">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+            
+            <div class="input-wrapper full-width">
+              <input type="email" id="login-email" class="forest-input" placeholder="Email Address" autocomplete="email">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            
+            <div class="input-wrapper full-width">
+              <input type="password" id="login-password" class="forest-input" placeholder="Password" autocomplete="current-password">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+          </div>
+          
+          <div class="forest-actions" style="margin-top: 28px;">
+            <button class="btn-forest-outline">Change Method</button>
+            <button id="btn-login" class="btn-forest-gradient">Sign In</button>
+          </div>
+          
+          <div class="forest-logo">HabitFlow</div>
+        </div>
+
+        <div class="floating-quotes-right">
+          <div class="forest-quotes-container">
+            <!-- Quotes injected dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Register View -->
+      <div id="register-view" class="auth-forest-layout hidden">
+        <div class="gradient-overlay"></div>
+        <div class="tint-overlay"></div>
+        
+        <div class="floating-form-left">
+          <p class="forest-label">START YOUR JOURNEY</p>
+          <h1 class="forest-heading">Create Account<span class="dot-accent">.</span></h1>
+          <p class="forest-switch-text">Already have an account? <a href="#" id="link-go-login" class="forest-link">Sign In</a></p>
+          
+          <div class="forest-form" style="margin-top: 32px;">
+            <div class="input-row">
+              <div class="input-wrapper">
+                <input type="text" id="register-firstname" class="forest-input" placeholder="First Name" autocomplete="given-name">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div class="input-wrapper">
+                <input type="text" id="register-lastname" class="forest-input" placeholder="Last Name" autocomplete="family-name">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+            
+            <div class="input-wrapper full-width">
+              <input type="email" id="register-email" class="forest-input" placeholder="Email Address" autocomplete="email">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            
+            <div class="input-wrapper full-width">
+              <input type="password" id="register-password" class="forest-input" placeholder="Password" autocomplete="new-password">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+          </div>
+          
+          <div class="forest-actions" style="margin-top: 28px;">
+            <button class="btn-forest-outline">Change Method</button>
+            <button id="btn-register" class="btn-forest-gradient">Sign Up</button>
+          </div>
+          
+          <div class="forest-logo">HabitFlow</div>
+        </div>
+
+        <div class="floating-quotes-right">
+          <div class="forest-quotes-container">
+            <!-- Quotes injected dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="dashboard-view" class="hidden">
+        <nav class="navbar">
+          <div class="heading-20">HabitFlow</div>
+          <div class="nav-right">
+            <span id="nav-username" class="ui-label-12">USER</span>
+            <div class="nav-divider"></div>
+            <button id="btn-logout" class="btn btn-primary" style="padding: 8px 20px;">Logout</button>
+          </div>
+        </nav>
+        
+        <main class="dashboard-content">
+          <h1 id="welcome-text" class="heading-36">Good evening</h1>
+          <h2 class="ui-label-11" style="margin-top: 8px;">YOUR HABITS</h2>
+          
+          <div class="dashboard-header-row">
+            <div id="habit-count" class="ui-label-10">0 ACTIVE HABITS</div>
+            <button id="btn-open-add-modal" class="btn btn-accent">ADD HABIT +</button>
+          </div>
+          
+          <div id="habit-list" class="habit-list">
+            <!-- Habits rendered here via JS -->
+          </div>
+        </main>
+      </div>
+
+      <!-- Add/Edit Modal (Overlay) -->
+      <div id="habit-modal" class="modal-overlay">
+        <div class="modal-card">
+          <h3 id="modal-title" class="ui-label-11" style="margin-bottom: 24px;">ADD HABIT</h3>
+          
+          <div class="form-group">
+            <label class="ui-label-11">Habit Name</label>
+            <input type="text" id="modal-habit-name" class="input-base" placeholder="e.g. Morning Meditation">
+          </div>
+          <div class="form-group">
+            <label class="ui-label-11">Description</label>
+            <textarea id="modal-habit-description" class="input-base" rows="3" placeholder="e.g. 15 minutes of mindfulness before coffee"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="ui-label-11">Frequency</label>
+            <select id="modal-habit-frequency" class="input-base">
+              <option value="DAILY">Daily</option>
+              <option value="WEEKLY">Weekly</option>
+              <option value="MONTHLY">Monthly</option>
+            </select>
+          </div>
+          
+          <div class="modal-footer">
+            <button id="btn-modal-cancel" class="btn" style="border-color: var(--border-color);">Cancel</button>
+            <button id="btn-modal-save" class="btn btn-accent">Save</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script type="module" src="/main.js"></script>
+    
+    <!-- Inline SVGs for rendering icons locally without external assets -->
+    <svg style="display: none;">
+      <defs>
+        <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </symbol>
+      </defs>
+    </svg>
+  </body>
+</html>
