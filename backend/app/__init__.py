@@ -1,31 +1,32 @@
 from flask import Flask
-from .models.db import db
-from .routes.auth import auth_bp
-from .routes.habits import habits_bp
+from flask_migrate import Migrate
+from app.models.db import db
 
 
-def create_app(config=None):
-    app = Flask(__name__, instance_relative_config=True)
+def create_app():
+    app = Flask(__name__)
 
-    # Default configuration
-    app.config.from_mapping(
-        SECRET_KEY="dev-secret-key-change-in-production",
-        SQLALCHEMY_DATABASE_URI="sqlite:///habit_tracker.db",
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    )
+    app.config["SECRET_KEY"] = "dev-secret-key"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///habit_tracker.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    if config:
-        app.config.update(config)
-
-    # Initialize extensions
     db.init_app(app)
+    Migrate(app, db)
 
-    # Register blueprints
-    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    # Import all models so Flask-Migrate can detect them
+    from app.models.user            import User
+    from app.models.category        import Category
+    from app.models.habit           import Habit
+    from app.models.habit_log       import HabitLog
+    from app.models.habit_score     import HabitScore
+    from app.models.partnership     import Partnership
+    from app.models.challenge       import Challenge
+    from app.models.challenge_entry import ChallengeEntry
+
+    # Phase 0 - Done
+    from app.routes.auth   import auth_bp
+    from app.routes.habits import habits_bp
+    app.register_blueprint(auth_bp,   url_prefix="/api/auth")
     app.register_blueprint(habits_bp, url_prefix="/api/habits")
-
-    # Create tables on first run
-    with app.app_context():
-        db.create_all()
 
     return app
