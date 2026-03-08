@@ -26,15 +26,15 @@ habit-tracker/
 └── app/
     ├── __init__.py
     ├── models/
-    │   ├── db.py
+    │   ├── db.py                ✅ done
     │   ├── user.py              ✅ done
-    │   ├── habit.py             ✅ done (needs updates P1)
-    │   ├── habit_log.py         🔨 Phase 1
-    │   ├── category.py          🔨 Phase 1
-    │   ├── habit_score.py       📊 Phase 2
-    │   ├── partnership.py       👥 Phase 7
-    │   ├── challenge.py         👥 Phase 7
-    │   └── challenge_entry.py   👥 Phase 7
+    │   ├── habit.py             ✅ done (updated P1)
+    │   ├── habit_log.py         ✅ done (model + migration)
+    │   ├── category.py          ✅ done (model + migration)
+    │   ├── habit_score.py       ✅ done (model + migration)
+    │   ├── partnership.py       👥 Phase 7 (skeleton)
+    │   ├── challenge.py         👥 Phase 7 (skeleton)
+    │   └── challenge_entry.py   👥 Phase 7 (skeleton)
     ├── routes/
     │   ├── auth.py              ✅ done
     │   ├── habits.py            ✅ done (needs updates P1)
@@ -65,11 +65,14 @@ habit-tracker/
 
 ---
 
-### 🔨 Phase 1 — Core Data Layer
-- [ ] `HabitLog` model — completed_date, mood (1–5), journal note
+### ✅ Phase 1 — Core Data Layer (Database Done)
+- [x] `HabitLog` model — completed_date, mood (1–5), journal note
+- [x] `Category` model — name, color, user-scoped
+- [x] `HabitScore` model — 0–100 score, calculated_at
+- [x] Habit updated — `category_id`, `frequency_type`, `frequency_days`, `is_archived`
+- [x] Flask-Migrate set up — all 8 tables migrated ✅
 - [ ] `logs.py` — check-in, undo, history endpoints
-- [ ] `Category` model + `categories.py` routes
-- [ ] Habit updates — `category_id`, `frequency_type`, `frequency_days`, `is_archived`
+- [ ] `categories.py` — CRUD routes
 - [ ] `streak.py` — current streak, longest streak logic
 - [ ] Archive / unarchive endpoints
 
@@ -134,7 +137,7 @@ habit-tracker/
 
 ### 🚀 Phase 8 — Ship It
 - [ ] SQLite → PostgreSQL migration
-- [ ] Flask-Migrate setup
+- [x] Flask-Migrate setup ✅
 - [ ] Deploy to Render
 - [ ] CI/CD via GitHub Actions
 - [ ] Sentry error logging
@@ -234,7 +237,12 @@ pip install -r requirements.txt
 # 4. Set up environment variables
 cp .env.example .env
 
-# 5. Run the server
+# 5. Run database migrations
+set FLASK_APP=run.py        # Windows
+# export FLASK_APP=run.py   # Mac/Linux
+flask db upgrade
+
+# 6. Run the server
 python run.py
 # Server runs at http://localhost:5000
 ```
