@@ -71,9 +71,9 @@ habit-tracker/
 - [x] `HabitScore` model — 0–100 score, calculated_at
 - [x] Habit updated — `category_id`, `frequency_type`, `frequency_days`, `is_archived`
 - [x] Flask-Migrate set up — all 8 tables migrated ✅
-- [ ] `logs.py` — check-in, undo, history endpoints
-- [ ] `categories.py` — CRUD routes
-- [ ] `streak.py` — current streak, longest streak logic
+- [x] `logs.py` — check-in, undo, history endpoints
+- [x] `categories.py` — CRUD routes
+- [x] `streak.py` — current streak, longest streak logic
 - [ ] Archive / unarchive endpoints
 
 ---

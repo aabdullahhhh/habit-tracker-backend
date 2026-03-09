@@ -23,10 +23,17 @@ def create_app():
     from app.models.challenge       import Challenge
     from app.models.challenge_entry import ChallengeEntry
 
-    # Phase 0 - Done
+    # Phase 0
     from app.routes.auth   import auth_bp
     from app.routes.habits import habits_bp
-    app.register_blueprint(auth_bp,   url_prefix="/api/auth")
-    app.register_blueprint(habits_bp, url_prefix="/api/habits")
+
+    # Phase 1
+    from app.routes.logs       import logs_bp
+    from app.routes.categories import categories_bp
+
+    app.register_blueprint(auth_bp,        url_prefix="/api/auth")
+    app.register_blueprint(habits_bp,      url_prefix="/api/habits")
+    app.register_blueprint(categories_bp,  url_prefix="/api/categories")
+    app.register_blueprint(logs_bp,        url_prefix="/api/habits/<int:habit_id>/logs")
 
     return app

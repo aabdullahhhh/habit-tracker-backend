@@ -1,8 +1,8 @@
-"""initial schema with all models
+"""initial schema
 
-Revision ID: 82106af7a914
+Revision ID: 8896a9ae919c
 Revises: 
-Create Date: 2026-03-09 03:47:44.338649
+Create Date: 2026-03-10 04:04:10.495037
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '82106af7a914'
+revision = '8896a9ae919c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -93,13 +93,11 @@ def upgrade():
     op.create_table('habit_logs',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('habit_id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('completed_date', sa.Date(), nullable=False),
     sa.Column('mood', sa.Integer(), nullable=True),
     sa.Column('note', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['habit_id'], ['habits.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('habit_id', 'completed_date', name='uq_habit_log_per_day')
     )
