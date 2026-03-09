@@ -23,17 +23,36 @@ def create_app():
     from app.models.challenge       import Challenge
     from app.models.challenge_entry import ChallengeEntry
 
+    # ── Blueprints ────────────────────────────────────────────────────────────
+
     # Phase 0
-    from app.routes.auth   import auth_bp
-    from app.routes.habits import habits_bp
+    from app.routes.auth       import auth_bp
+    from app.routes.habits     import habits_bp
 
     # Phase 1
     from app.routes.logs       import logs_bp
     from app.routes.categories import categories_bp
 
+    # Phase 2
+    from app.routes.stats      import stats_bp
+
+    # Phase 3 (uncomment when ready)
+    # from app.routes.ai_routes import ai_bp
+
+    # Phase 7 (uncomment when ready)
+    # from app.routes.partnerships import partnerships_bp
+    # from app.routes.challenges   import challenges_bp
+
     app.register_blueprint(auth_bp,        url_prefix="/api/auth")
     app.register_blueprint(habits_bp,      url_prefix="/api/habits")
     app.register_blueprint(categories_bp,  url_prefix="/api/categories")
     app.register_blueprint(logs_bp,        url_prefix="/api/habits/<int:habit_id>/logs")
+    app.register_blueprint(stats_bp,       url_prefix="/api/habits")
+
+    # ── Scheduler ─────────────────────────────────────────────────────────────
+    import os
+    if os.environ.get("FLASK_RUN_FROM_CLI") != "true":
+        from app.utils.scheduler import start_scheduler
+        start_scheduler(app)
 
     return app
