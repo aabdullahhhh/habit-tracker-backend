@@ -37,18 +37,18 @@ habit-tracker/
     │   └── challenge_entry.py   👥 Phase 7 (skeleton)
     ├── routes/
     │   ├── auth.py              ✅ done
-    │   ├── habits.py            ✅ done (needs updates P1)
-    │   ├── logs.py              🔨 Phase 1
-    │   ├── categories.py        🔨 Phase 1
-    │   ├── stats.py             📊 Phase 2
+    │   ├── habits.py            ✅ done (archive/unarchive added P1)
+    │   ├── logs.py              ✅ done (P1)
+    │   ├── categories.py        ✅ done (P1)
+    │   ├── stats.py             ✅ done (P2)
     │   ├── ai_routes.py         🤖 Phase 3
     │   ├── partnerships.py      👥 Phase 7
     │   └── challenges.py        👥 Phase 7
     └── utils/
         ├── responses.py         ✅ done
-        ├── streak.py            🔨 Phase 1
-        ├── scoring.py           📊 Phase 2
-        ├── scheduler.py         📊 Phase 2
+        ├── streak.py            ✅ done (P1)
+        ├── scoring.py           ✅ done (P2)
+        ├── scheduler.py         ✅ done (P2)
         ├── ai.py                🤖 Phase 3
         └── ai_context.py        🤖 Phase 3
 ```
@@ -65,24 +65,45 @@ habit-tracker/
 
 ---
 
-### ✅ Phase 1 — Core Data Layer (Database Done)
+### ✅ Phase 1 — Core Data Layer (Done)
 - [x] `HabitLog` model — completed_date, mood (1–5), journal note
 - [x] `Category` model — name, color, user-scoped
 - [x] `HabitScore` model — 0–100 score, calculated_at
 - [x] Habit updated — `category_id`, `frequency_type`, `frequency_days`, `is_archived`
-- [x] Flask-Migrate set up — all 8 tables migrated ✅
-- [x] `logs.py` — check-in, undo, history endpoints
-- [x] `categories.py` — CRUD routes
-- [x] `streak.py` — current streak, longest streak logic
-- [ ] Archive / unarchive endpoints
+- [x] Flask-Migrate set up — all 8 tables migrated
+- [x] `logs.py` — check-in, undo, history + streak endpoints
+- [x] `categories.py` — full CRUD routes
+- [x] `streak.py` — current streak, longest streak, total completions
+- [x] Archive / unarchive endpoints in `habits.py`
+- [x] Blueprints registered — logs, categories wired up in `__init__.py`
+
+**Key decisions:**
+- DATE not DATETIME for check-ins (timezone safety)
+- "Not found" instead of "access denied" (prevents user enumeration)
+- Soft delete for habits (`is_archived`) so history is preserved
+- `frequency_days` stored as JSON string e.g. `[0,2,4]` = Mon/Wed/Fri
+- Duplicate check-in blocked at route level + DB unique constraint
 
 ---
 
-### 📊 Phase 2 — Stats & Insights Engine
-- [ ] `stats.py` — 30-day graph, heatmap (365 days), best day of week, mood trend
-- [ ] `habit_score.py` — 0–100 score model
-- [ ] `scoring.py` — score calculation logic
-- [ ] `scheduler.py` — APScheduler for daily score recalc + slip detection
+### ✅ Phase 2 — Stats & Insights Engine (Done)
+- [x] `stats.py` — 5 endpoints: 30-day graph, 365-day heatmap, best day of week, mood trend, habit score
+- [x] `scoring.py` — 0–100 habit score with 4 weighted factors:
+  - Completion rate last 30 days → 40 pts
+  - Current streak → 30 pts
+  - Mood average → 20 pts
+  - Consistency / no big gaps → 10 pts
+- [x] `scheduler.py` — APScheduler background jobs:
+  - Nightly score recalc at midnight
+  - Slip detection at 8am (logs habits not checked in 2+ days)
+- [x] Stats blueprint registered in `__init__.py`
+- [x] APScheduler installed (`apscheduler==3.11.2`)
+
+**Key decisions:**
+- Score calculated live on GET + saved nightly by scheduler
+- Scheduler skips during `flask db migrate/upgrade` to prevent crashes
+- ISO date strings (`2026-03-10`) used throughout for frontend compatibility
+- Mood trend includes direction: `improving`, `declining`, or `stable`
 
 ---
 
@@ -173,32 +194,32 @@ habit-tracker/
 | GET | `/:id` | Get single habit | ✅ |
 | PATCH | `/:id` | Update habit | ✅ |
 | DELETE | `/:id` | Delete habit | ✅ |
-| PATCH | `/:id/archive` | Archive habit | 🔨 P1 |
-| PATCH | `/:id/unarchive` | Restore habit | 🔨 P1 |
+| PATCH | `/:id/archive` | Archive habit | ✅ |
+| PATCH | `/:id/unarchive` | Restore habit | ✅ |
 
 ### Logs — `/api/habits/:id/logs`
 | Method | Endpoint | Description | Status |
 |---|---|---|---|
-| POST | `/` | Check in (mood + note) | 🔨 P1 |
-| DELETE | `/` | Undo today's check-in | 🔨 P1 |
-| GET | `/` | History + streak stats | 🔨 P1 |
+| POST | `/` | Check in (mood + note) | ✅ |
+| DELETE | `/` | Undo today's check-in | ✅ |
+| GET | `/` | History + streak stats | ✅ |
 
 ### Categories — `/api/categories`
 | Method | Endpoint | Description | Status |
 |---|---|---|---|
-| POST | `/` | Create category | 🔨 P1 |
-| GET | `/` | List categories | 🔨 P1 |
-| PATCH | `/:id` | Rename / recolor | 🔨 P1 |
-| DELETE | `/:id` | Delete category | 🔨 P1 |
+| POST | `/` | Create category | ✅ |
+| GET | `/` | List categories | ✅ |
+| PATCH | `/:id` | Rename / recolor | ✅ |
+| DELETE | `/:id` | Delete category | ✅ |
 
 ### Stats — `/api/habits/:id/stats`
 | Method | Endpoint | Description | Status |
 |---|---|---|---|
-| GET | `/30-day` | Daily completions last 30 days | 📊 P2 |
-| GET | `/heatmap` | 365 days of completion data | 📊 P2 |
-| GET | `/best-day` | Best day of week insight | 📊 P2 |
-| GET | `/mood-trend` | Mood over time | 📊 P2 |
-| GET | `/score` | Current habit score (0–100) | 📊 P2 |
+| GET | `/30-day` | Daily completions last 30 days | ✅ |
+| GET | `/heatmap` | 365 days of completion data | ✅ |
+| GET | `/best-day` | Best day of week insight | ✅ |
+| GET | `/mood-trend` | Mood over time | ✅ |
+| GET | `/score` | Current habit score (0–100) | ✅ |
 
 ### AI — `/api/ai`
 | Method | Endpoint | Description | Status |
@@ -268,8 +289,6 @@ Every API response follows this envelope:
 | Symbol | Meaning |
 |---|---|
 | ✅ | Done |
-| 🔨 | Phase 1 — Core Data Layer |
-| 📊 | Phase 2 — Stats & Insights |
 | 🤖 | Phase 3 — AI Layer |
 | 🌐 | Phase 4 — Frontend |
 | 🔐 | Phase 5 — Auth Hardening |
